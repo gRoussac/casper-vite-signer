@@ -37,7 +37,7 @@ document.querySelector('#app').innerHTML = `
 `;
 
 //Create Casper client and service to interact with Casper node.
-const apiUrl = 'rpc';
+const apiUrl = '/rpc';
 const casperService = new CasperServiceByJsonRPC(apiUrl);
 const casperClient = new CasperClient(apiUrl);
 const btnConnect = document.getElementById('btnConnect');
@@ -52,12 +52,9 @@ async function AccountInformation() {
   const isConnected = await window.casperlabsHelper.isConnected();
   if (isConnected) {
     const publicKey = await window.casperlabsHelper.getActivePublicKey();
-    textAddress.textContent += publicKey;
+    textAddress.textContent = `PublicKeyHex ${publicKey.toString()}`;
 
-    const latestBlock = await casperService.getLatestBlockInfo();
-    const root = await casperService.getStateRootHash({
-      Hash: latestBlock.block.hash,
-    });
+    const root = await casperService.getStateRootHash();
 
     const balanceUref = await casperService.getAccountBalanceUrefByPublicKey(
       root,
@@ -65,10 +62,7 @@ async function AccountInformation() {
     );
 
     // //account balance from the last block
-    const balance = await casperService.getAccountBalance(
-      latestBlock.block.header.state_root_hash,
-      balanceUref
-    );
-    textBalance.textContent = `PublicKeyHex ${balance.toString()}`;
+    const balance = await casperService.getAccountBalance(root, balanceUref);
+    textBalance.textContent = `Balance ${balance.toString()}`;
   }
 }
