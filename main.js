@@ -18,7 +18,7 @@ document.querySelector('#app').innerHTML = `
 
   <!-- The place where Balance will display. -->
   <h1 id="textBalance">Balance</h1>
-  <h1>Transer</h1>
+  <h1>Transfer</h1>
 
   <!-- The amount to send in the transaction. -->
   <!-- Minimal amount is 2.5CSPR so 2.5 * 10000 (1CSPR = 10.000 motes)  -->
