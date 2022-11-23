@@ -43,12 +43,11 @@ const casperClient = new CasperClient(apiUrl);
 const btnConnect = document.getElementById('btnConnect');
 
 btnConnect.addEventListener('click', async () => {
-  const isConnected = await window.casperlabsHelper.isConnected();
-  console.log('await window.casperlabsHelper.isConnected()', isConnected);
   window.casperlabsHelper.requestConnection();
-  await AccountInformation();
+  await accountInformation();
 });
-async function AccountInformation() {
+
+async function accountInformation() {
   const isConnected = await window.casperlabsHelper.isConnected();
   if (isConnected) {
     const publicKey = await window.casperlabsHelper.getActivePublicKey();
@@ -89,7 +88,7 @@ async function sendTransaction() {
 
   let deployParams = new DeployUtil.DeployParams(
     publicKey,
-    'casper-net-1',
+    'casper-test',
     gasPrice,
     ttl
   );
@@ -124,3 +123,11 @@ async function sendTransaction() {
 
 const btnSend = document.getElementById('btnSend');
 btnSend.addEventListener('click', async () => await sendTransaction());
+window.addEventListener(
+  'signer:unlocked',
+  async () => await accountInformation()
+);
+window.addEventListener(
+  'signer:activeKeyChanged',
+  async () => await accountInformation()
+);
