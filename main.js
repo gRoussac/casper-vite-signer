@@ -94,7 +94,7 @@ async function sendTransaction() {
 
   let deployParams = new DeployUtil.DeployParams(
     publicKey,
-    'casper-test',
+    'casper-net-1',
     gasPrice,
     ttl
   );
