@@ -41,9 +41,15 @@ const apiUrl = '/rpc';
 const casperService = new CasperServiceByJsonRPC(apiUrl);
 const casperClient = new CasperClient(apiUrl);
 const btnConnect = document.getElementById('btnConnect');
+const btnDisconnect = document.getElementById('btnDisconnect');
 
 btnConnect.addEventListener('click', async () => {
   window.casperlabsHelper.requestConnection();
+  await accountInformation();
+});
+
+btnDisconnect.addEventListener('click', async () => {
+  window.casperlabsHelper.disconnectFromSite();
   await accountInformation();
 });
 
